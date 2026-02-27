@@ -219,25 +219,53 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <ServiceCard
-              icon={GraduationCap}
-              title="Exam Preparation Services"
-              description="We prepare students and professionals for globally recognized examinations including: Digital SAT, IELTS, TOEFL, Pearson Test of English, Occupational English Test, LanguageCert, Skills for English"
-            />
-            <ServiceCard
               icon={BookOpen}
               title="Academic Support Services"
-              description="Personalized academic support, Academic diagnostic assessments, Curriculum fit assessment, Subject and course selection, School selection and application advisory, Upper secondary project support, Home tuition, Home schooling advisory"
+             items={[
+                      "Personalized academic support",
+                      "Academic diagnostic assessments",
+                      "Curriculum fit assessment",
+                      "Subject and course selection",
+                      "School selection and application advisory",
+                      "Upper secondary project support",
+                      "Home tuition",
+                      "Home schooling advisory"
+                    ]}
             />
             <ServiceCard
               icon={Users}
               title="Academic & Career Counseling"
-              description="Personalized academic coaching, Local & international university application counseling, Career exploration and assessment, Job shadowing coordination, Academic and professional pathway coaching, Career transition coaching"
-            />
+              items={[
+                    "Personalized academic coaching",
+                    "Local & international university application counseling",
+                    "Career exploration and assessment",
+                    "Job shadowing coordination",
+                    "Academic and professional pathway coaching",
+                    "Career transition coaching"
+                  ]}            />
+                  <ServiceCard
+              icon={GraduationCap}
+              title="Exam Preparation Services"
+                  items={[
+                          "Digital SAT",
+                          "IELTS",
+                          "TOEFL",
+                          "Pearson Test of English",
+                          "Occupational English Test",
+                          "LanguageCert",
+                          "Skills for English"
+                        ]}/>
             <ServiceCard
               icon={Briefcase}
               title="Educational Staffing & Institutional Consulting"
-              description="Teacher and non-teaching staff recruitment, Human resource planning, Job design analysis, Performance management systems, School accreditation acquisition support, School operations audit"
-            />
+              items={[
+                    "Teacher and non-teaching staff recruitment",
+                    "Human resource planning",
+                    "Job design analysis",
+                    "Performance management systems",
+                    "School accreditation acquisition support",
+                    "School operations audit"
+                  ]}            />
           </div>
         </div>
       </section>
