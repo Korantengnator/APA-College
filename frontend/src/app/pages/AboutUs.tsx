@@ -1,271 +1,308 @@
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import WhatsAppButton from "../components/WhatsAppButton";
-import { Shield, Globe, MessageSquare, ExternalLink } from "lucide-react";
+import PageHero from "../components/PageHero";
+import SectionHeading from "../components/SectionHeading";
+import CtaBand from "../components/CtaBand";
+import ImageSlot from "../components/ImageSlot";
+import Reveal from "../components/Reveal";
+import { IMAGES, TEAM, SHOW_TEAM_SECTION } from "../data/images";
+import { usePageTitle } from "../lib/usePageTitle";
+import {
+  Shield,
+  Globe,
+  MessageSquare,
+  MapPin,
+  Building2,
+  Home,
+  Video,
+  GraduationCap,
+  HeartPulse,
+} from "lucide-react";
 import React from "react";
 
-export default function AboutUs() {
-  const schools = [
-    "Ghana Christian High International School",
-    "Lincoln Community School",
-    "American International School",
-    "Christian Vine School",
-    "Rodean School",
-    "University of Ghana",
-    "Accra Community School",
-    "New Nation School",
-    "University of Professional Studies Accra",
-    "Wisconsin International University College",
-    "Academic City University College",
-  ];
+const regions = ["Ghana", "South Africa", "Kenya", "Mali", "United Kingdom", "United States", "Canada"];
 
-  const healthcareInstitutions = [
-    "Korle-Bu Teaching Hospital",
-    "Ridge Hospital",
-    "UG Medical Centre",
-    "Accra Psychiatric Hospital",
-    "Shai Osudoku Hospital",
-    "Pantang Hospital",
-    "Achimota Polyclinic",
-  ];
+const deliveryModes = [
+  { icon: Building2, label: "Office sessions" },
+  { icon: Home, label: "Home engagements" },
+  { icon: Video, label: "Virtual platforms" },
+];
+
+const schools = [
+  "Ghana Christian High International School",
+  "Lincoln Community School",
+  "American International School",
+  "Christian Vine School",
+  "Rodean School",
+  "University of Ghana",
+  "Accra Community School",
+  "New Nation School",
+  "University of Professional Studies Accra",
+  "Wisconsin International University College",
+  "Academic City University College",
+];
+
+const healthcareInstitutions = [
+  "Korle-Bu Teaching Hospital",
+  "Ridge Hospital",
+  "UG Medical Centre",
+  "Accra Psychiatric Hospital",
+  "Shai Osudoku Hospital",
+  "Pantang Hospital",
+  "Achimota Polyclinic",
+];
+
+const expertise = [
+  {
+    icon: Shield,
+    title: "Subject-Matter Excellence",
+    text: "Experts with deep knowledge across academic disciplines",
+  },
+  {
+    icon: Globe,
+    title: "International Exposure",
+    text: "Global experience and cross-cultural competency",
+  },
+  {
+    icon: MessageSquare,
+    title: "Cultural Intelligence",
+    text: "Understanding local contexts with global standards",
+  },
+  {
+    icon: Shield,
+    title: "Professional Rigor",
+    text: "Commitment to excellence and ethical practice",
+  },
+];
+
+const values = [
+  {
+    icon: Shield,
+    title: "Integrity",
+    text: "We uphold the highest ethical standards in all our interactions, ensuring transparency, honesty, and accountability.",
+  },
+  {
+    icon: Globe,
+    title: "Global Excellence",
+    text: "We deliver world-class services that meet and exceed international benchmarks while honoring African contexts.",
+  },
+  {
+    icon: MessageSquare,
+    title: "Effective Communication",
+    text: "We prioritize clear, timely, and culturally sensitive communication with all stakeholders.",
+  },
+];
+
+function ChipGroup({
+  icon: Icon,
+  title,
+  items,
+}: {
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+  title: string;
+  items: string[];
+}) {
+  return (
+    <div>
+      <h3 className="flex items-center gap-2 text-2xl font-bold text-[#0D3B66] mb-5">
+        <Icon size={26} className="text-[#1F5CBA]" />
+        {title}
+      </h3>
+      <div className="flex flex-wrap gap-3">
+        {items.map((item) => (
+          <span
+            key={item}
+            className="bg-white border border-gray-200 rounded-full px-4 py-2 text-gray-800 font-medium shadow-sm"
+          >
+            {item}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default function AboutUs() {
+  usePageTitle(
+    "About Us",
+    "Learn about APA College Educational Services: who we are, where we serve, our vision and our core values."
+  );
 
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
       <WhatsAppButton />
 
-      {/* Hero Section */}
-      <section
-        className="relative h-[400px] flex items-center justify-center bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1759111892854-f62c49692506?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBvZmZpY2UlMjBidWlsZGluZyUyMGFmcmljYXxlbnwxfHx8fDE3NzE2NjIyNDZ8MA&ixlib=rb-4.1.0&q=80&w=1080')",
-        }}
-      >
-        <div className="absolute inset-0 bg-[#0D3B66] bg-opacity-85"></div>
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-            About Us
-          </h1>
-          <div className="w-24 h-1 bg-[#F4D03F] mx-auto"></div>
-        </div>
-      </section>
+      <PageHero
+        title="About Us"
+        subtitle="Discover who we are, where we work, and what drives us to help learners and institutions compete, excel and lead."
+      />
 
-      {/* Who We Are Section */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0D3B66] mb-6 text-center">
-              Who We Are
-            </h2>
-            <div className="w-24 h-1 bg-[#F4D03F] mx-auto mb-8"></div>
-            <div className="space-y-6 text-gray-700 leading-relaxed text-lg">
-              <p>
-                APA College Educational Services (ACES) is a professional
-                educational consultancy delivering internationally benchmarked
-                academic preparation, strategic career alignment, and
-                institutional advisory services across Africa and beyond.
+      {/* Who we are */}
+      <section className="py-20 md:py-28 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeading title="Who We Are" />
+          <div className="grid md:grid-cols-2 gap-10 items-center mb-12">
+            <Reveal>
+              <p className="text-gray-700 leading-relaxed text-lg md:text-xl">
+                APA College Educational Services (ACES) is a professional educational consultancy
+                delivering internationally benchmarked academic preparation, strategic career
+                alignment, and institutional advisory services across Africa and beyond.
               </p>
-              <p>
-                We operate with a global mindset and African roots, serving
-                clients across multiple continents including{" "}
-                <span className="font-semibold text-[#0D3B66]">Ghana</span>,{" "}
-                <span className="font-semibold text-[#0D3B66]">
-                  South Africa
-                </span>
-                ,{" "}
-                <span className="font-semibold text-[#0D3B66]">Kenya</span>,{" "}
-                <span className="font-semibold text-[#0D3B66]">
-                  United Kingdom
-                </span>
-                , and the{" "}
-                <span className="font-semibold text-[#0D3B66]">
-                  United States
-                </span>
-                .
+            </Reveal>
+            <Reveal delay={120}>
+              <ImageSlot
+                src={IMAGES.aboutStory}
+                alt="The ACES team in front of the company banners"
+                label="Team or office photo (landscape)"
+                className="aspect-[4/3]"
+              />
+            </Reveal>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-[#F5F7FA] rounded-lg p-6 md:p-8">
+              <h3 className="flex items-center gap-2 text-xl font-bold text-[#0D3B66] mb-3">
+                <MapPin size={22} className="text-[#1F5CBA]" />
+                Where we serve
+              </h3>
+              <p className="text-gray-700 leading-relaxed mb-5">
+                We operate with a global mindset and African roots, serving clients across
+                multiple continents.
               </p>
-              <p>
-                Our delivery is flexible and client-centered. We provide
-                services through{" "}
-                <span className="font-semibold text-[#0D3B66]">
-                  office sessions
-                </span>
-                ,{" "}
-                <span className="font-semibold text-[#0D3B66]">
-                  home engagements
-                </span>
-                , and{" "}
-                <span className="font-semibold text-[#0D3B66]">
-                  virtual platforms
-                </span>
-                , ensuring accessibility and convenience without compromising
-                quality or professionalism.
+              <div className="flex flex-wrap gap-2">
+                {regions.map((r) => (
+                  <span
+                    key={r}
+                    className="bg-[#0D3B66] text-white text-sm font-semibold rounded-full px-4 py-1.5"
+                  >
+                    {r}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-[#F5F7FA] rounded-lg p-6 md:p-8">
+              <h3 className="flex items-center gap-2 text-xl font-bold text-[#0D3B66] mb-3">
+                <Video size={22} className="text-[#1F5CBA]" />
+                How we deliver
+              </h3>
+              <p className="text-gray-700 leading-relaxed mb-5">
+                Our delivery is flexible and client-centered, ensuring accessibility and
+                convenience without compromising quality or professionalism.
               </p>
+              <div className="grid grid-cols-3 gap-3">
+                {deliveryModes.map(({ icon: Icon, label }) => (
+                  <div
+                    key={label}
+                    className="bg-white rounded-lg p-3 text-center border border-gray-200"
+                  >
+                    <Icon size={24} className="text-[#0D3B66] mx-auto mb-2" />
+                    <span className="text-sm font-semibold text-gray-800">{label}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Institutional Reach - Schools */}
-      <section className="py-16 md:py-24 bg-[#F5F7FA]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#0D3B66] mb-6 text-center">
-            Institutional Reach & Clientele
-          </h2>
-          <div className="w-24 h-1 bg-[#F4D03F] mx-auto mb-12"></div>
-
-          <div className="mb-12">
-            <h3 className="text-2xl font-bold text-[#0D3B66] mb-6">
-              Educational Institutions
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {schools.map((school, index) => (
-                <div
-                  key={index}
-                  className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
-                >
-                  <p className="text-gray-700 font-medium">{school}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3 className="text-2xl font-bold text-[#0D3B66] mb-6">
-              Healthcare Institutions
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {healthcareInstitutions.map((institution, index) => (
-                <div
-                  key={index}
-                  className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
-                >
-                  <p className="text-gray-700 font-medium">{institution}</p>
-                </div>
-              ))}
-            </div>
+      {/* Institutional reach */}
+      <section className="py-20 md:py-28 bg-[#F5F7FA]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeading eyebrow="Our clients" title="Institutional Reach & Clientele" />
+          <div className="space-y-12">
+            <ChipGroup icon={GraduationCap} title="Educational Institutions" items={schools} />
+            <ChipGroup icon={HeartPulse} title="Healthcare Institutions" items={healthcareInstitutions} />
           </div>
         </div>
       </section>
 
-      {/* Expert Network Section */}
-      <section className="py-16 md:py-24 bg-[#F5F7FA]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#0D3B66] mb-6 text-center">
-            Our Expert Network
-          </h2>
-          <div className="w-24 h-1 bg-[#F4D03F] mx-auto mb-12"></div>
+      {/* Expert network */}
+      <section className="py-20 md:py-28 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeading eyebrow="Our people" title="Our Expert Network" />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-white rounded-lg p-6 shadow-md text-center">
-              <div className="w-16 h-16 bg-[#0D3B66] rounded-full flex items-center justify-center mx-auto mb-4">
-                <Shield size={32} className="text-[#F4D03F]" />
+            {expertise.map(({ icon: Icon, title, text }) => (
+              <div key={title} className="bg-[#F5F7FA] rounded-lg p-6 text-center">
+                <div className="w-16 h-16 bg-[#0D3B66] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Icon size={30} className="text-[#F4D03F]" />
+                </div>
+                <h3 className="text-lg font-bold text-[#0D3B66] mb-2">{title}</h3>
+                <p className="text-gray-700">{text}</p>
               </div>
-              <h3 className="text-lg font-bold text-[#0D3B66] mb-2">
-                Subject-Matter Excellence
-              </h3>
-              <p className="text-gray-600">
-                Experts with deep knowledge across academic disciplines
-              </p>
-            </div>
-            <div className="bg-white rounded-lg p-6 shadow-md text-center">
-              <div className="w-16 h-16 bg-[#0D3B66] rounded-full flex items-center justify-center mx-auto mb-4">
-                <Globe size={32} className="text-[#F4D03F]" />
-              </div>
-              <h3 className="text-lg font-bold text-[#0D3B66] mb-2">
-                International Exposure
-              </h3>
-              <p className="text-gray-600">
-                Global experience and cross-cultural competency
-              </p>
-            </div>
-            <div className="bg-white rounded-lg p-6 shadow-md text-center">
-              <div className="w-16 h-16 bg-[#0D3B66] rounded-full flex items-center justify-center mx-auto mb-4">
-                <MessageSquare size={32} className="text-[#F4D03F]" />
-              </div>
-              <h3 className="text-lg font-bold text-[#0D3B66] mb-2">
-                Cultural Intelligence
-              </h3>
-              <p className="text-gray-600">
-                Understanding local contexts with global standards
-              </p>
-            </div>
-            <div className="bg-white rounded-lg p-6 shadow-md text-center">
-              <div className="w-16 h-16 bg-[#0D3B66] rounded-full flex items-center justify-center mx-auto mb-4">
-                <Shield size={32} className="text-[#F4D03F]" />
-              </div>
-              <h3 className="text-lg font-bold text-[#0D3B66] mb-2">
-                Professional Rigor
-              </h3>
-              <p className="text-gray-600">
-                Commitment to excellence and ethical practice
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Vision Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-[#0D3B66] to-[#1a5a8f]">
+      {/* Team (placeholders until real photos and names are added in data/images.ts) */}
+      {SHOW_TEAM_SECTION && TEAM.length > 0 && (
+        <section className="py-20 md:py-28 bg-[#F5F7FA]">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <SectionHeading
+              eyebrow="Meet the team"
+              title="The people behind ACES"
+              subtitle="Meet some of the people who make ACES work."
+            />
+            <div className="flex flex-wrap justify-center gap-8">
+              {TEAM.map((m, i) => (
+                <Reveal key={i} delay={i * 90} className="w-full max-w-[15rem]">
+                  <div className="text-center">
+                    <ImageSlot
+                      src={m.photo}
+                      alt={m.name}
+                      label="Portrait (4:5)"
+                      className="aspect-[4/5] object-top mb-4"
+                    />
+                    <h3 className="text-lg font-bold text-[#0D3B66]">{m.name}</h3>
+                    <p className="text-gray-700">{m.role}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Vision */}
+      <section className="py-20 md:py-28 bg-gradient-to-br from-[#0D3B66] to-[#1a5a8f]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-          <h2 className="text-3xl md:text-4xl font-bold mb-8">Our Vision</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Vision</h2>
           <div className="w-24 h-1 bg-[#F4D03F] mx-auto mb-8"></div>
           <blockquote className="text-xl md:text-2xl leading-relaxed italic">
-            "To become a globally respected African educational consultancy that
-            empowers students and institutions across the world to compete,
-            excel, and lead on the global stage through contextually relevant,
-            internationally benchmarked educational solutions and strategic
-            career alignment."
+            &ldquo;To become a globally respected African educational consultancy that empowers
+            students and institutions across the world to compete, excel, and lead on the
+            global stage through contextually relevant, internationally benchmarked
+            educational solutions and strategic career alignment.&rdquo;
           </blockquote>
         </div>
       </section>
 
-      {/* Core Values Section */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#0D3B66] mb-6 text-center">
-            Core Values
-          </h2>
-          <div className="w-24 h-1 bg-[#F4D03F] mx-auto mb-12"></div>
+      {/* Core values */}
+      <section className="py-20 md:py-28 bg-[#F5F7FA]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeading eyebrow="What guides us" title="Core Values" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-[#F5F7FA] rounded-lg p-8 text-center hover:shadow-xl transition-shadow">
-              <div className="w-20 h-20 bg-gradient-to-br from-[#0D3B66] to-[#1a5a8f] rounded-full flex items-center justify-center mx-auto mb-6">
-                <Shield size={40} className="text-[#F4D03F]" />
+            {values.map(({ icon: Icon, title, text }) => (
+              <div
+                key={title}
+                className="bg-white rounded-lg p-8 text-center shadow-sm hover:shadow-xl transition-shadow"
+              >
+                <div className="w-20 h-20 bg-gradient-to-br from-[#0D3B66] to-[#1a5a8f] rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Icon size={38} className="text-[#F4D03F]" />
+                </div>
+                <h3 className="text-2xl font-bold text-[#0D3B66] mb-3">{title}</h3>
+                <p className="text-gray-700 text-base md:text-[17px] leading-relaxed">{text}</p>
               </div>
-              <h3 className="text-2xl font-bold text-[#0D3B66] mb-4">
-                Integrity
-              </h3>
-              <p className="text-gray-700 leading-relaxed">
-                We uphold the highest ethical standards in all our interactions,
-                ensuring transparency, honesty, and accountability.
-              </p>
-            </div>
-            <div className="bg-[#F5F7FA] rounded-lg p-8 text-center hover:shadow-xl transition-shadow">
-              <div className="w-20 h-20 bg-gradient-to-br from-[#0D3B66] to-[#1a5a8f] rounded-full flex items-center justify-center mx-auto mb-6">
-                <Globe size={40} className="text-[#F4D03F]" />
-              </div>
-              <h3 className="text-2xl font-bold text-[#0D3B66] mb-4">
-                Global Excellence
-              </h3>
-              <p className="text-gray-700 leading-relaxed">
-                We deliver world-class services that meet and exceed
-                international benchmarks while honoring African contexts.
-              </p>
-            </div>
-            <div className="bg-[#F5F7FA] rounded-lg p-8 text-center hover:shadow-xl transition-shadow">
-              <div className="w-20 h-20 bg-gradient-to-br from-[#0D3B66] to-[#1a5a8f] rounded-full flex items-center justify-center mx-auto mb-6">
-                <MessageSquare size={40} className="text-[#F4D03F]" />
-              </div>
-              <h3 className="text-2xl font-bold text-[#0D3B66] mb-4">
-                Effective Communication
-              </h3>
-              <p className="text-gray-700 leading-relaxed">
-                We prioritize clear, timely, and culturally sensitive
-                communication with all stakeholders.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
+
+      {/* Call to action */}
+      <CtaBand title="Ready to compete, excel, and lead?" ticks />
 
       <Footer />
     </div>
