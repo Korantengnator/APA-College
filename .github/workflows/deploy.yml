@@ -1,10 +1,10 @@
 name: Deploy to Firebase Hosting
 
-# This workflow runs every time you push code to the 'dev' branch
+# This workflow runs every time you push code to the 'main' branch
 on:
   push:
     branches:
-      - dev
+      - main
 
 jobs:
   build-and-deploy:
