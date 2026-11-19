@@ -5,26 +5,31 @@ interface TestimonialCardProps {
   name: string;
   title: string;
   testimonial: string;
-  image: string;
+  image?: string; // optional: initials are shown when there is no real photo
 }
 
-export default function TestimonialCard({
-  name,
-  title,
-  testimonial,
-  image,
-}: TestimonialCardProps) {
+export default function TestimonialCard({ name, title, testimonial, image }: TestimonialCardProps) {
+  const initials = name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase();
+
   return (
-    <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow duration-300 h-full flex flex-col">
+    <div className="h-full flex flex-col bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
       <div className="flex items-center mb-4">
-        <img
-          src={image}
-          alt={name}
-          className="w-16 h-16 rounded-full object-cover mr-4"
-        />
+        {image ? (
+          <img src={image} alt={name} className="w-14 h-14 rounded-full object-cover mr-4" />
+        ) : (
+          <div className="w-14 h-14 rounded-full bg-[#0D3B66] text-white font-bold flex items-center justify-center mr-4 flex-shrink-0">
+            {initials}
+          </div>
+        )}
         <div>
           <h4 className="font-bold text-[#0D3B66]">{name}</h4>
-          <p className="text-sm text-gray-600">{title}</p>
+          <p className="text-sm text-gray-700">{title}</p>
         </div>
       </div>
 
@@ -34,8 +39,8 @@ export default function TestimonialCard({
         ))}
       </div>
 
-      <p className="text-gray-700 leading-relaxed italic flex-grow">
-        "{testimonial}"
+      <p className="text-gray-700 text-base md:text-[17px] leading-relaxed italic flex-grow">
+        &ldquo;{testimonial}&rdquo;
       </p>
     </div>
   );
