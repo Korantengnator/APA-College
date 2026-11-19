@@ -2,10 +2,18 @@ import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import WhatsAppButton from "../components/WhatsAppButton";
 import ServiceCard from "../components/ServiceCard";
+import HeroBackground from "../components/HeroBackground";
+import LogoMarquee from "../components/LogoMarquee";
 import TestimonialCard from "../components/TestimonialCard";
 import StatCard from "../components/StatCard";
 import DifferentiatorCard from "../components/DifferentiatorCard";
 import { Button } from "../components/ui/button";
+import SectionHeading from "../components/SectionHeading";
+import CtaBand from "../components/CtaBand";
+import Reveal from "../components/Reveal";
+import { usePageTitle } from "../lib/usePageTitle";
+import { Link } from "react-router";
+import { whatsappLink } from "../data/contact";
 import {
   GraduationCap,
   BookOpen,
@@ -15,57 +23,115 @@ import {
   Heart,
   Building2,
   ArrowRight,
+  MessageCircle,
+  ClipboardList,
+  LifeBuoy,
+  School,
+  UserRound,
 } from "lucide-react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
 import React from "react";
 
+// When a clean hero photo is ready, put its path here (for example "/hero.jpg") and it replaces the branded panel.
+const HERO_IMAGE = "";
+
+const partnerships = [
+  "British Council",
+  "Ghana ASCD",
+  "UG Business School",
+  "UG Medical Centre",
+  "Novago Ghana Ltd",
+  "Westol Petroleum Ltd",
+  "Aaya Spa",
+  "Tyries Essentials",
+];
+
+// Logos shown in the two sliding rows (files are in public/logos).
+// To re-sort a logo, move its line from one list to the other.
+const curriculaLogos = [
+  { name: "Cambridge Assessment International Education", file: "cambridge.png" },
+  { name: "International Baccalaureate", file: "ib.png" },
+  { name: "AP (College Board)", file: "ap.png" },
+  { name: "Ghana Education Service", file: "ges.png" },
+  { name: "EduCanada", file: "educanada.png" },
+];
+
+const examLogos = [
+  { name: "IELTS", file: "ielts.png" },
+  { name: "TOEFL", file: "toefl.png" },
+  { name: "Pearson Test of English", file: "pearson.png" },
+  { name: "Occupational English Test (OET)", file: "oet.png" },
+  { name: "SAT", file: "sat.png" },
+  { name: "LanguageCert", file: "languagecert.png" },
+  { name: "Skills for English", file: "skills-for-english.png" },
+  { name: "Praxis", file: "praxis.png" },
+];
+
+const audiences = [
+  {
+    icon: UserRound,
+    title: "Students & Parents",
+    text: "Tutoring, curriculum guidance, and school or university applications.",
+    to: "/services/academic-support",
+  },
+  {
+    icon: GraduationCap,
+    title: "Professionals",
+    text: "English proficiency exams and career coaching for study, work and migration.",
+    to: "/services/exam-preparation",
+  },
+  {
+    icon: School,
+    title: "Schools & Institutions",
+    text: "Recruitment, HR systems, accreditation support and operations audits.",
+    to: "/services/staffing",
+  },
+];
+
+// Draft wording for the process: confirm with your boss
+const howItWorks = [
+  {
+    icon: MessageCircle,
+    title: "Free consultation",
+    text: "Tell us your goals, your timeline and where you are now.",
+  },
+  {
+    icon: ClipboardList,
+    title: "Personalised plan",
+    text: "We map the exams, subjects or services that fit you or your institution.",
+  },
+  {
+    icon: LifeBuoy,
+    title: "Ongoing support",
+    text: "Our team guides you step by step until you reach your goal.",
+  },
+];
+
+function SuccessBadge({ className = "" }: { className?: string }) {
+  return (
+    <div className={`bg-[#F4D03F] rounded-xl px-5 py-3 shadow-lg ${className}`}>
+      <div className="flex items-center gap-3">
+        <Trophy size={30} className="text-[#0D3B66]" />
+        <div>
+          <div className="text-2xl font-bold text-[#0D3B66] leading-none">95%+</div>
+          <div className="text-sm font-medium text-[#0D3B66]">Success Rate</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
-  const partnerships = [
-    "British Council",
-    "Ghana ASCD",
-    "UG Business School",
-    "UG Medical Centre",
-    "Novago Ghana Ltd",
-    "Westol Petroleum Ltd",
-    "Aaya Spa",
-    "Tyries Essentials",
-  ];
+  usePageTitle(
+    "APA College Educational Services",
+    "APA College Educational Services is an African educational consultancy offering academic support, exam preparation, career counseling and institutional consulting."
+  );
 
   const handleConsultation = () => {
-    window.open(
-      "https://wa.me/233243614654?text=Hello,%20I%20would%20like%20to%20book%20a%20consultation",
-      "_blank"
-    );
+    window.open(whatsappLink("Hello, I would like to book a consultation"), "_blank");
   };
 
   const scrollToServices = () => {
-    const servicesSection = document.getElementById("services");
-    servicesSection?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const carouselSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 4000,
-    arrows: true,
-  };
-
-  const certificationCarouselSettings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    arrows: false,
+    document.getElementById("services")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -73,221 +139,229 @@ export default function Home() {
       <Navigation />
       <WhatsAppButton />
 
-      {/* Hero Section */}
-      <section className="relative min-h-[700px] lg:min-h-[800px] flex items-center bg-[#0D3B66] overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left Column - Text Content */}
-            <div className="text-white space-y-6">
-              <div className="inline-block">
-                <span className="bg-white bg-opacity-20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium">
-                  Premium Educational Consultancy Services
-                </span>
-              </div>
-
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                Rooted in Africa. Ready for the World.
-              </h1>
-              <h5 className="text-2xl md:text-2xl lg:text-2xl font-bold leading-tight">
-                THE EDUCATION PEOPLE
-              </h5>
-
-              <p className="text-lg md:text-xl leading-relaxed text-gray-200">
-                APA College Educational Services is a globally positioned African
-                educational consultancy empowering students and institutions to
-                compete, excel, and lead on the global stage through internationally
-                benchmarked educational solutions and strategic career alignment.
-              </p>
-
-
-
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Button
-                  onClick={handleConsultation}
-                  className="bg-[#F4D03F] hover:bg-[#e5c230] text-[#0D3B66] px-8 py-6 text-lg font-semibold rounded-lg transition-colors inline-flex items-center justify-center space-x-2"
-                >
-                  <span>Book a Consultation</span>
-                  <ArrowRight size={20} />
-                </Button>
-                <Button
-                  onClick={scrollToServices}
-                  variant="outline"
-                  className="border-2 border-white bg-transparent text-white hover:bg-white hover:text-[#0D3B66] px-8 py-6 text-lg font-semibold rounded-lg transition-colors"
-                >
-                  Explore Our Services
-                </Button>
-              </div>
+      {/* Hero */}
+      <section className="bg-gradient-to-br from-[#0A2744] via-[#0D3B66] to-[#14507F] pt-16 relative overflow-hidden">
+        <HeroBackground />
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16 grid lg:grid-cols-[1.15fr_0.85fr] gap-10 items-center">
+          <div className="text-white">
+            <span className="inline-block bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium mb-5">
+              Premium Educational Consultancy Services
+            </span>
+            <h1 className="text-3xl md:text-5xl lg:text-[3.4rem] font-extrabold tracking-tight leading-[1.1] mb-3">
+              Rooted in Africa. Ready for the World.
+            </h1>
+            <p className="text-lg md:text-xl font-bold tracking-wide text-[#F4D03F] mb-5">
+              THE EDUCATION PEOPLE
+            </p>
+            <p className="text-base md:text-lg leading-relaxed text-gray-200 max-w-xl mb-8">
+              APA College Educational Services is a globally positioned African educational
+              consultancy empowering students and institutions to compete, excel, and lead on
+              the global stage through internationally benchmarked educational solutions and
+              strategic career alignment.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button
+                onClick={handleConsultation}
+                className="bg-[#F4D03F] hover:bg-[#e5c230] text-[#0D3B66] px-7 py-6 text-base font-semibold rounded-lg inline-flex items-center justify-center gap-2"
+              >
+                <span>Book a Consultation</span>
+                <ArrowRight size={18} />
+              </Button>
+              <Button
+                onClick={scrollToServices}
+                variant="outline"
+                className="border-2 border-white bg-transparent text-white hover:bg-white hover:text-[#0D3B66] px-7 py-6 text-base font-semibold rounded-lg"
+              >
+                Explore Our Services
+              </Button>
             </div>
+          </div>
 
-            {/* Right Column - Image */}
-            <div className="relative">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                <Slider {...carouselSettings}>
-                  <div>
+          {/* Visual: a clean photo when HERO_IMAGE is set, otherwise the large ACES logo */}
+          <div className="hidden md:flex items-center justify-center">
+            {HERO_IMAGE ? (
+              <div className="relative w-full">
+                <img
+                  src={HERO_IMAGE}
+                  alt="ACES students and consultants"
+                  className="w-full h-[360px] object-cover rounded-2xl shadow-2xl"
+                />
+                <SuccessBadge className="absolute -bottom-5 right-4" />
+              </div>
+            ) : (
+              <div className="flex flex-col items-center">
+                <div className="relative">
+                  <div className="absolute -inset-8 rounded-full bg-white/10"></div>
+                  <div className="absolute -inset-16 rounded-full border border-white/10"></div>
+                  <div className="relative w-56 h-56 lg:w-72 lg:h-72 rounded-full bg-white overflow-hidden shadow-2xl ring-4 ring-white/30">
                     <img
                       src="/logo.png"
-                      alt="ACES Collaborative Learning"
-                      className="w-full h-[400px] lg:h-[500px] object-cover"
+                      alt="APA College Educational Services logo"
+                      className="w-full h-full object-cover"
                     />
                   </div>
-                  <div>
-                    <img
-                      src="/flyer1.png"
-                      alt="Students learning"
-                      className="w-full h-[400px] lg:h-[500px] object-cover"
-                    />
-                  </div>
-                  <div>
-                    <img
-                      src="/flyer2.png"
-                      alt="ACES Student Excellence"
-                      className="w-full h-[400px] lg:h-[500px] object-cover"
-                    />
-                  </div>
-                  <div>
-                    <img
-                      src="/flyer3.png"
-                      alt="ACES Collaborative Learning"
-                      className="w-full h-[400px] lg:h-[500px] object-cover"
-                    />
-                  </div>
-                  <div>
-                    <img
-                      src="/flyer4.png"
-                      alt="ACES Collaborative Learning"
-                      className="w-full h-[400px] lg:h-[500px] object-cover"
-                    />
-                  </div>
-                </Slider>
-
-                {/* Success Rate Badge */}
-                <div className="absolute bottom-6 right-6 bg-[#F4D03F] rounded-xl px-6 py-4 shadow-lg z-10">
-                  <div className="flex items-center space-x-3">
-                    <Trophy size={32} className="text-[#0D3B66]" />
-                    <div>
-                      <div className="text-3xl font-bold text-[#0D3B66]">95%+</div>
-                      <div className="text-sm font-medium text-[#0D3B66]">Success Rate</div>
-                    </div>
-                  </div>
+                  <SuccessBadge className="absolute -bottom-4 -right-10" />
                 </div>
+                <p className="mt-16 text-[#F4D03F] font-medium">...Possibilities With God</p>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Certification Logos Carousel Section */}
-      <section className="py-3 bg-white border-y border-gray-200">
+      {/* Curricula and exams: two sliding rows */}
+      <section className="py-12 bg-white border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-center text-sm font-semibold uppercase tracking-widest text-gray-600 mb-5">
+            Curricula and education systems we work with
+          </p>
+          <LogoMarquee logos={curriculaLogos} />
 
-          <div className="w-full">
-            <Slider {...certificationCarouselSettings}>
-              <div className="flex items-center justify-center">
-                <img
-                  src="/part1.png"
-                  alt="Cambridge, GCE, EduCanada, IB, AP"
-                  className="w-full h-24 object-contain"
-                />
-              </div>
-              <div className="flex items-center justify-center">
-                <img
-                  src="/part2.png"
-                  alt="PRAXIS, Pearson, IELTS, OET"
-                  className="w-full h-24 object-contain"
-                />
-              </div>
-              <div className="flex items-center justify-center">
-                <img
-                  src="/part3.png"
-                  alt="LanguageCert, Skills for English, ETS, TOEFL, SAT"
-                  className="w-full h-24 object-contain"
-                />
-              </div>
-            </Slider>
+          <p className="text-center text-sm font-semibold uppercase tracking-widest text-gray-600 mt-10 mb-5">
+            Exams we prepare you for
+          </p>
+          <LogoMarquee logos={examLogos} reverse />
+        </div>
+      </section>
+
+      {/* Who we help */}
+      <section className="py-20 md:py-28 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeading
+            eyebrow="Who we help"
+            title="Find the right path for you"
+            subtitle="Whether you are a student, a professional or an institution, start here."
+          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {audiences.map(({ icon: Icon, title, text, to }, i) => (
+              <Reveal key={title} delay={i * 90} className="h-full">
+                <Link
+                  to={to}
+                  onClick={() => window.scrollTo({ top: 0 })}
+                  className="group h-full flex flex-col bg-[#F5F7FA] hover:bg-white border border-transparent hover:border-gray-200 hover:shadow-xl rounded-xl p-8 transition-all duration-300"
+                >
+                  <div className="w-14 h-14 rounded-full bg-[#0D3B66] flex items-center justify-center mb-5">
+                    <Icon size={26} className="text-[#F4D03F]" />
+                  </div>
+                  <h3 className="text-xl font-bold text-[#0D3B66] mb-2">{title}</h3>
+                  <p className="text-gray-700 text-base leading-relaxed mb-5">{text}</p>
+                  <span className="mt-auto inline-flex items-center gap-1 font-semibold text-[#0D3B66] group-hover:gap-2 transition-all">
+                    Explore <ArrowRight size={16} />
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Services Overview Section */}
-      <section id="services" className="py-16 md:py-24 bg-[#F5F7FA]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0D3B66] mb-4">
-              Our Services
-            </h2>
-            <div className="w-24 h-1 bg-[#F4D03F] mx-auto"></div>
-          </div>
+      {/* Services */}
+      <section id="services" className="py-20 md:py-28 bg-[#F5F7FA]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeading eyebrow="What we do" title="Our Services" subtitle="Four service areas, one goal: helping you and your institution compete, excel and lead." />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Reveal className="h-full">
             <ServiceCard
               icon={BookOpen}
               title="Academic Support Services"
-             items={[
-                      "Personalized academic support",
-                      "Academic diagnostic assessments",
-                      "Curriculum fit assessment",
-                      "Subject and course selection",
-                      "School selection and application advisory",
-                      "Upper secondary project support",
-                      "Home tuition",
-                      "Home schooling advisory"
-                    ]}
+              to="/services/academic-support"
+              items={[
+                "Personalized academic support",
+                "Academic diagnostic assessments",
+                "Curriculum fit assessment",
+                "Subject and course selection",
+                "School selection and application advisory",
+                "Upper secondary project support",
+                "Home tuition",
+                "Home schooling advisory",
+              ]}
             />
+          </Reveal>
+            <Reveal delay={90} className="h-full">
             <ServiceCard
               icon={Users}
               title="Academic & Career Counseling"
+              to="/services/career-counseling"
               items={[
-                    "Personalized academic coaching",
-                    "Local & international university application counseling",
-                    "Career exploration and assessment",
-                    "Job shadowing coordination",
-                    "Academic and professional pathway coaching",
-                    "Career transition coaching"
-                  ]}            />
-                  <ServiceCard
+                "Personalized academic coaching",
+                "Local & international university application counseling",
+                "Career exploration and assessment",
+                "Job shadowing coordination",
+                "Academic and professional pathway coaching",
+                "Career transition coaching",
+              ]}
+            />
+          </Reveal>
+            <Reveal delay={180} className="h-full">
+            <ServiceCard
               icon={GraduationCap}
               title="Exam Preparation Services"
-                  items={[
-                          "Digital SAT",
-                          "IELTS",
-                          "TOEFL",
-                          "Pearson Test of English",
-                          "Occupational English Test",
-                          "LanguageCert",
-                          "Skills for English"
-                        ]}/>
+              to="/services/exam-preparation"
+              items={[
+                "Digital SAT",
+                "IELTS",
+                "TOEFL",
+                "Pearson Test of English",
+                "Occupational English Test",
+                "LanguageCert",
+                "Skills for English",
+              ]}
+            />
+          </Reveal>
+            <Reveal delay={270} className="h-full">
             <ServiceCard
               icon={Briefcase}
               title="Educational Staffing & Institutional Consulting"
+              to="/services/staffing"
               items={[
-                    "Teacher and non-teaching staff recruitment",
-                    "Human resource planning",
-                    "Job design analysis",
-                    "Performance management systems",
-                    "School accreditation acquisition support",
-                    "School operations audit"
-                  ]}            />
+                "Teacher and non-teaching staff recruitment",
+                "Human resource planning",
+                "Job design analysis",
+                "Performance management systems",
+                "School accreditation acquisition support",
+                "School operations audit",
+              ]}
+            />
+          </Reveal>
           </div>
         </div>
       </section>
 
-      {/* What Differentiates Section */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0D3B66] mb-4">
-              What Differentiates ACES
-            </h2>
-            <div className="w-24 h-1 bg-[#F4D03F] mx-auto"></div>
+      {/* How it works */}
+      <section className="py-20 md:py-28 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeading
+            eyebrow="How it works"
+            title="Three simple steps"
+            subtitle="From your first conversation to your goal, we keep the process clear."
+          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {howItWorks.map(({ icon: Icon, title, text }, i) => (
+              <Reveal key={title} delay={i * 120} className="text-center">
+                <div className="relative w-20 h-20 mx-auto mb-5 rounded-full bg-[#0D3B66] flex items-center justify-center">
+                  <Icon size={32} className="text-[#F4D03F]" />
+                  <span className="absolute -top-1 -right-1 w-8 h-8 rounded-full bg-[#F4D03F] text-[#0D3B66] font-bold flex items-center justify-center">
+                    {i + 1}
+                  </span>
+                </div>
+                <h3 className="text-xl font-bold text-[#0D3B66] mb-2">{title}</h3>
+                <p className="text-gray-700 text-base leading-relaxed max-w-xs mx-auto">{text}</p>
+              </Reveal>
+            ))}
           </div>
+        </div>
+      </section>
+
+      {/* What differentiates ACES */}
+      <section className="py-20 md:py-28 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeading eyebrow="Why ACES" title="What Differentiates ACES" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <DifferentiatorCard
               number={1}
               text="We integrate academic excellence with strategic career alignment."
             />
-            <DifferentiatorCard
-              number={2}
-              text="We serve both individuals and institutions."
-            />
+            <DifferentiatorCard number={2} text="We serve both individuals and institutions." />
             <DifferentiatorCard
               number={3}
               text="We maintain international standards while remaining contextually African."
@@ -296,23 +370,20 @@ export default function Home() {
               number={4}
               text="Our Services are tailored for the convenience of our clients"
             />
-            <DifferentiatorCard
-              number={5}
-              text="We leverage expert networks and institutional partnerships to enhance impact."
-            />
+            <div className="md:col-span-2 md:max-w-xl md:mx-auto w-full">
+              <DifferentiatorCard
+                number={5}
+                text="We leverage expert networks and institutional partnerships to enhance impact."
+              />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Our Impact Section */}
-      <section className="py-16 md:py-24 bg-[#F5F7FA]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0D3B66] mb-4">
-              Our Impact
-            </h2>
-            <div className="w-24 h-1 bg-[#F4D03F] mx-auto"></div>
-          </div>
+      {/* Our impact */}
+      <section className="py-20 md:py-28 bg-[#F5F7FA]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeading eyebrow="Results" title="Our Impact" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <StatCard
               icon={Trophy}
@@ -333,82 +404,57 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Partnerships & Strategic Collaborations Section */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#0D3B66] mb-6 text-center">
-            Partnerships & Strategic Collaborations
-          </h2>
-          <div className="w-24 h-1 bg-[#F4D03F] mx-auto mb-8"></div>
-          <p className="text-center text-gray-700 leading-relaxed text-lg mb-12 max-w-3xl mx-auto">
-            Our strategic partnerships enhance industry exposure, workforce
-            alignment, and institutional development across multiple sectors.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {partnerships.map((partner, index) => (
-              <div
-                key={index}
-                className="bg-gradient-to-br from-[#F5F7FA] to-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow text-center"
-              >
-                <p className="text-gray-700 font-semibold">{partner}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0D3B66] mb-4">
-              What Our Clients Say
-            </h2>
-            <div className="w-24 h-1 bg-[#F4D03F] mx-auto"></div>
-          </div>
+      {/* Testimonials */}
+      <section className="py-20 md:py-28 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeading eyebrow="Client stories" title="What Our Clients Say" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <TestimonialCard
               name="Belinda Koomson"
               title="University Student"
               testimonial="ACES helped me pass my OET exam on the first attempt. Their structured approach and expert guidance made all the difference in my career progression."
-              image="https://images.unsplash.com/photo-1731213562305-0152c6946bdc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmZW1hbGUlMjBibGFjayUyMHN0dWRlbnQlMjBzdHVkeWluZ3xlbnwxfHx8fDE3NzE2OTU3NDh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
             />
             <TestimonialCard
               name="Maame Akyaa Boateng"
               title="SHS Student"
               testimonial="APA College Educational Services supported me through my O Levels, SAT prep, and arranged job shadowing in four companies that helped clarify my career goals. Their guidance truly boosted my confidence and academic performance."
-              image="https://images.unsplash.com/photo-1739300293504-234817eead52?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBhZnJpY2FuJTIwYnVzaW5lc3MlMjB3b21hbnxlbnwxfHx8fDE3NzE2NjIyNDV8MA&ixlib=rb-4.1.0&q=80&w=1080"
             />
             <TestimonialCard
               name="Nana Yaw Koranteng"
               title="University Student"
               testimonial="With APA’s focused SAT preparation and mentorship, I gained admission into my university of choice. Their structured support made all the difference in my success."
-              image="https://images.unsplash.com/photo-1744809495173-217ca4faa8bc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZnJpY2FuJTIwc3R1ZGVudCUyMHN0dWR5aW5nfGVufDF8fHx8MTc3MTY2MjI0NXww&ixlib=rb-4.1.0&q=80&w=1080"
             />
           </div>
         </div>
       </section>
 
-      {/* Call to Action Section */}
-      <section className="py-16 md:py-20 bg-[#f4d03f]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-[#0d3b66]">
-            Ready to compete, excel, and lead?
-          </h2>
-          <p className="text-lg md:text-xl mb-8 text-[#0d3b66]">
-            Book a consultation with APA College Educational Services and take
-            your next strategic step toward global academic and career
-            excellence.
+      {/* Partnerships */}
+      <section className="py-20 md:py-28 bg-[#F5F7FA]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <SectionHeading eyebrow="Our network" title="Partnerships & Strategic Collaborations" />
+          <p className="text-gray-700 leading-relaxed text-lg mb-10 max-w-3xl mx-auto">
+            Our strategic partnerships enhance industry exposure, workforce alignment, and
+            institutional development across multiple sectors.
           </p>
-          <Button
-            onClick={handleConsultation}
-            className="text-[#0D3B66] px-8 py-6 text-lg font-semibold rounded-md transition-colors inline-flex items-center space-x-2 bg-[#0d3b66]"
-          >
-            <span className="text-[#f4d03f]">Book Consultation</span>
-            <ArrowRight size={20} className="text-[#F4D03F]" />
-          </Button>
+          <div className="flex flex-wrap justify-center gap-3">
+            {partnerships.map((partner) => (
+              <span
+                key={partner}
+                className="bg-white border border-gray-200 rounded-full px-5 py-2.5 text-gray-800 font-semibold shadow-sm"
+              >
+                {partner}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
+
+      {/* Call to action */}
+      <CtaBand
+        title="Ready to compete, excel, and lead?"
+        text="Book a consultation with APA College Educational Services and take your next strategic step toward global academic and career excellence."
+        ticks
+      />
 
       <Footer />
     </div>
