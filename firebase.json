@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "apa-college-fc915",
     "public": "frontend/dist",
     "ignore": [
       "firebase.json",
