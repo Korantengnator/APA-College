@@ -47,6 +47,7 @@ jobs:
           project_id: apa-college-fc915
           workload_identity_provider: projects/187068651683/locations/global/workloadIdentityPools/github-hosting/providers/apa-college
           service_account: github-hosting-deploy@apa-college-fc915.iam.gserviceaccount.com
+          token_format: access_token
 
       # Step 6: Deploy the built files to Firebase Hosting
       - name: Deploy to Firebase
